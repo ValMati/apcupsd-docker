@@ -27,13 +27,14 @@ jobs:
 
       - name: Setup Image Tag
         run: |
-          TAG=${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.repository }}:latest
+          TAG=${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.repository.name }}:latest
+          echo DOCKER_HUB_USERNAME=${{ secrets.DOCKER_HUB_USERNAME }}
 
           # Change all uppercase to lowercase
           TAG=$(echo $TAG | tr '[A-Z]' '[a-z]')
 
           # echo TAG to test
-          echo $TAG
+          echo TAG=$TAG
 
       - name: Build and push
         id: docker_build
