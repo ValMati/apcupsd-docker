@@ -27,8 +27,7 @@ jobs:
 
       - name: Setup Image Tag
         run: |
-          TAG=${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.repository.name }}:latest
-          echo DOCKER_HUB_USERNAME=${{ secrets.DOCKER_HUB_USERNAME }}
+          TAG={{ github.repository }}:latest
 
           # Change all uppercase to lowercase
           TAG=$(echo $TAG | tr '[A-Z]' '[a-z]')
@@ -43,7 +42,7 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.repository }}:latest
+          tags: $TAG
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
