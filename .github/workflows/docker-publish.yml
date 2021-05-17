@@ -25,16 +25,6 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Setup Image Tag
-        run: |
-          TAG=${{ github.repository }}:latest
-
-          # Change all uppercase to lowercase
-          TAG=$(echo $TAG | tr '[A-Z]' '[a-z]')
-
-          # echo TAG to test
-          echo TAG=$TAG
-
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
@@ -42,7 +32,7 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: $TAG
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/apcupsd:latest
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
