@@ -25,6 +25,12 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v1
 
+      - name: Setup tab
+        run: |
+          TAG=${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.repository }}:latest
+          # Change all uppercase to lowercase
+          TAG=$(echo $TAG | tr '[A-Z]' '[a-z]')
+
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
